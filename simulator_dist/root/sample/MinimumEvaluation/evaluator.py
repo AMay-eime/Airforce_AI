@@ -213,5 +213,8 @@ if __name__ == "__main__":
         "visualize":args.visualize,
     }
     if(args.log_dir is not None):
+        print(f"{args.log_dir} saved")
         matchInfo["log_dir"]=args.log_dir
+    else:
+        print(f"log none")
     run(matchInfo)
