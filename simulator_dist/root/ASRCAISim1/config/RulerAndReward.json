@@ -1,0 +1,121 @@
+{"Factory":{
+	"Ruler":{
+		"R4BVRRuler01":{
+			"class":"R4BVRRuler01",
+			"config":{
+				"interval":{
+					"unit":"time",
+					"value":0.1
+				},
+                "maxTime":2400,
+                "minTime":300.0,
+                "dLine":100000,
+                "dOut":75000,
+                "hLim":20000,
+                "westSider":"Red",
+                "eastSider":"Blue",
+                "pDisq": -10,
+                "pBreak": 1.0,
+                "pHit": {
+                    "Default":0.5
+                },
+                "pCrash": {
+                    "Default":1.0
+                },
+                "pAlive": {
+                    "Default":0.0
+                },
+                "pAdv": 0.0,
+                "pOut": 0.01,
+                "pHitPerAircraft": true,
+                "pCrashPerAircraft": true,
+                "pAlivePerAircraft": true,
+                "enableAdditionalTime": true,
+                "terminalAtElimination": true,
+                "terminalAtBreak": false,
+                "considerFuelConsumption": true,
+                "fuelMargin": 0.1,
+                "distanceFromBase": {
+                    "Red":581714.73,
+                    "Blue":581714.73
+                },
+                "modelNamesToBeConsideredForBreak": {
+                    "Red":["Any"],
+                    "Blue":["Any"]
+                },
+                "modelNamesToBeExcludedForBreak": {
+                    "Red":[],
+                    "Blue":[]
+                },
+                "modelNamesToBeConsideredForElimination": {
+                    "Red":["Any"],
+                    "Blue":["Any"]
+                },
+                "modelNamesToBeExcludedForElimination": {
+                    "Red":[],
+                    "Blue":[]
+                }
+			}
+		}
+	},
+	"Reward":{
+		"WinLoseReward":{
+			"class":"WinLoseReward",
+			"config":{
+				"interval":{
+					"unit":"time",
+					"value":0.1
+				},
+				"win":1.0,
+				"lose":-1.0,
+				"draw":0.0
+			}
+		},
+		"ScoreReward":{
+			"class":"ScoreReward",
+			"config":{
+				"interval":{
+					"unit":"time",
+					"value":0.1
+				}
+			}
+		},
+		"R4BVRBasicReward01":{
+			"class":"R4BVRBasicReward01",
+			"config":{
+				"interval":{
+					"unit":"time",
+					"value":0.1
+				},
+				"rElim":0.0,
+				"rElimE":0.0,
+				"rBreakRatio":0.0,
+				"rBreak":0.0,
+				"rBreakE":0.0,
+				"adjustBreakEnd":true,
+				"rTimeup":0.0,
+				"rDisq":0.0,
+				"rDisqE":0.0,
+				"rHitRatio":0.0,
+				"rHit":{"Default":0.0},
+				"rHitE":{"Default":-0.0},
+				"rAdvRatio":0.0,
+				"acceptNegativeAdv":true,
+				"rCrashRatio":0.0,
+				"rCrash":{"Default":0.0},
+				"rCrashE":{"Default":0.0},
+				"rAliveRatio":0.0,
+				"rAlive":{"Default":0.0},
+				"rAliveE":{"Default":-0.0},
+				"rOutRatio":0.0,
+				"adjustZerosum":true,
+				"rHitPerAircraft": true,
+				"rHitEPerAircraft": true,
+				"rCrashPerAircraft": true,
+				"rCrashEPerAircraft": true,
+				"rAlivePerAircraft": true,
+				"rAliveEPerAircraft": true
+			}
+		}
+	}
+}}

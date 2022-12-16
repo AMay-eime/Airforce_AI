@@ -1,0 +1,5 @@
+include addons/HandyRLUtility/MANIFEST.in.fragment
+include addons/HandyRLUtility/builder.py
+recursive-include addons/HandyRLUtility *.py
+recursive-exclude addons/HandyRLUtility *.pyc
+recursive-include ASRCAISim1/addons/HandyRLUtility *

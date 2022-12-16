@@ -1,0 +1,14 @@
+# Copyright (c) 2021-2022 Air Systems Research Center, Acquisition, Technology & Logistics Agency(ATLA)
+import os,pickle
+import ray
+def loadWeights(path):
+	with open(path,"rb") as f:
+		return  pickle.load(f)
+def saveWeights(weights,path):
+	os.makedirs(os.path.dirname(path),exist_ok=True)
+	with open(path,"wb") as f:
+		pickle.dump(weights,f)
+def loadPolicyWeights(policy,path):
+	policy.set_weights(loadWeights(path))
+def savePolicyWeights(policy,path):
+	saveWeights(policy.get_weights(),path)

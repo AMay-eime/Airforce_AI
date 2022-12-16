@@ -1,0 +1,320 @@
+{"Factory":{
+    "Agent":{
+        "MyAgentSample01S":{
+            "class":"R4AgentSample01S",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "perceive":0.1,
+                    "control":0.1,
+                    "behave":0.1
+                },
+                
+                "maxTrackNum":{
+                    "Friend":4,
+                    "Enemy":4
+                },
+                "maxMissileNum":{
+                    "Friend":8,
+                    "Enemy":1
+                },
+                "horizontalNormalizer":100000.0,
+                "verticalNormalizer":20000.0,
+                "fgtrVelNormalizer":300.0,
+                "mslVelNormalizer":1200.0,
+                "use_image_observation":true,
+                "image_longitudinal_resolution":32,
+                "image_lateral_resolution":32,
+                "image_front_range":200000.0,
+                "image_back_range":0.0,
+                "image_side_range":100000.0,
+                "image_horizon":120,
+                "image_interval":1,
+                "image_rotate":false,
+                "image_relative_position":false,
+                "use_vector_observation":true,
+                "include_last_action":true,
+                "vector_past_points":[],
+
+                "flatten_action_space":false,
+                "dstAz_relative":true,
+                "turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+                "use_override_evasion":true,
+                "evasion_turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+                "use_altitude_command":false,
+                "altTable":[-8000,-4000,-2000,-1000,0,1000,2000,4000,8000],
+                "refAltInterval":1000,
+                "pitchTable":[-45,-20,-10,-5,0,5,10,20,45],
+                "accelTable":[-20.0,0.0,20.0],
+                "always_maxAB":false,
+                "use_Rmax_fire":true,
+                "shotIntervalTable":[5,10,20,40,80],
+                "shotThresholdTable":[0.0,0.25,0.5,0.75,1.0],
+
+                "altMin":2000,
+                "altMax":15000,
+                "dOutLimitRatio":0.9,
+                "dOutLimitScale":50.0,
+                "maxSimulShot":4,
+                "minimumV":150.0,
+                "minimumRecoveryV":180.0,
+                "minimumRecoveryDstV":200.0,
+
+                "altitudeKeeper":{
+                    "pGain":-3e-1,
+                    "dGain":-1e-1,
+                    "minPitch":-0.524,
+                    "maxPitch":0.524
+                }
+            }
+        },
+        "MyAgentSample01M":{
+            "class":"R4AgentSample01M",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "perceive":0.1,
+                    "control":0.1,
+                    "behave":0.1
+                },
+                
+                "maxTrackNum":{
+                    "Friend":4,
+                    "Enemy":4
+                },
+                "maxMissileNum":{
+                    "Friend":8,
+                    "Enemy":1
+                },
+                "horizontalNormalizer":100000.0,
+                "verticalNormalizer":20000.0,
+                "fgtrVelNormalizer":300.0,
+                "mslVelNormalizer":1200.0,
+                "use_image_observation":true,
+                "image_longitudinal_resolution":32,
+                "image_lateral_resolution":32,
+                "image_front_range":200000.0,
+                "image_back_range":0.0,
+                "image_side_range":100000.0,
+                "image_horizon":120,
+                "image_interval":1,
+                "use_vector_observation":true,
+                "include_last_action":true,
+                "vector_past_points":[],
+
+                "flatten_action_space":false,
+                "dstAz_relative":true,
+                "turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+                "use_override_evasion":true,
+                "evasion_turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+                "use_altitude_command":false,
+                "altTable":[-8000,-4000,-2000,-1000,0,1000,2000,4000,8000],
+                "refAltInterval":1000,
+                "pitchTable":[-45,-20,-10,-5,0,5,10,20,45],
+                "accelTable":[-20.0,0.0,20.0],
+                "always_maxAB":false,
+                "use_Rmax_fire":true,
+                "shotIntervalTable":[5,10,20,40,80],
+                "shotThresholdTable":[0.0,0.25,0.5,0.75,1.0],
+
+                "altMin":2000,
+                "altMax":15000,
+                "dOutLimitRatio":0.9,
+                "dOutLimitScale":50.0,
+                "maxSimulShot":4,
+                "minimumV":150.0,
+                "minimumRecoveryV":180.0,
+                "minimumRecoveryDstV":200.0,
+
+                "altitudeKeeper":{
+                    "pGain":-3e-1,
+                    "dGain":-1e-1,
+                    "minPitch":-0.524,
+                    "maxPitch":0.524
+                }
+            }
+        },
+        "CombinedMyAgentSample01S":{
+            "class":"SimpleMultiPortCombiner",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "perceive":0.1,
+                    "control":0.1,
+                    "behave":0.1
+                },
+                "children":{
+                    "0":{"name":"child0","model":"MyAgentSample01S"},
+                    "1":{"name":"child1","model":"MyAgentSample01S"},
+                    "2":{"name":"child2","model":"MyAgentSample01S"},
+                    "3":{"name":"child3","model":"MyAgentSample01S"}
+                }
+            }
+        },
+        "QuadRandomInitial":{
+            "class":"MultiPortCombiner",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "perceive":0.1,
+                    "control":0.1,
+                    "behave":0.1
+                },
+                "children":{
+                    "0":{"name":"child0","model":"R4RandomInitial"},
+                    "1":{"name":"child1","model":"R4RandomInitial"},
+                    "2":{"name":"child2","model":"R4RandomInitial"},
+                    "3":{"name":"child3","model":"R4RandomInitial"}
+                }
+            }
+        }
+    },
+    "Ruler":{
+        "R4ContestRuler":{
+            "class":"R4BVRRuler01",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "value":0.1
+                },
+                "maxTime":2400,
+                "minTime":300.0,
+                "dLine":100000,
+                "dOut":75000,
+                "hLim":20000,
+                "westSider":"Red",
+                "eastSider":"Blue",
+                "pDisq": -10,
+                "pBreak": 1.0,
+                "pHit": {
+                    "R4ContestFighterLarge":0.5,
+                    "R4ContestFighterSmall":0.25
+                },
+                "pCrash": {
+                    "R4ContestFighterLarge":1.0,
+                    "R4ContestFighterSmall":0.5
+                },
+                "pAlive": {
+                    "R4ContestFighterLarge":0.0,
+                    "R4ContestFighterSmall":0.0
+                },
+                "pAdv": 0.0,
+                "pOut": 0.01,
+                "pHitPerAircraft": true,
+                "pCrashPerAircraft": true,
+                "pAlivePerAircraft": true,
+                "enableAdditionalTime": true,
+                "terminalAtElimination": true,
+                "terminalAtBreak": false,
+                "considerFuelConsumption": true,
+                "fuelMargin": 0.1,
+                "distanceFromBase": {
+                    "Red":581714.73,
+                    "Blue":581714.73
+                },
+                "modelNamesToBeConsideredForBreak": {
+                    "Red":["R4ContestFighterLarge"],
+                    "Blue":["R4ContestFighterLarge"]
+                },
+                "modelNamesToBeExcludedForBreak": {
+                    "Red":[],
+                    "Blue":[]
+                },
+                "modelNamesToBeConsideredForElimination": {
+                    "Red":["Any"],
+                    "Blue":["Any"]
+                },
+                "modelNamesToBeExcludedForElimination": {
+                    "Red":[],
+                    "Blue":[]
+                }
+            }
+        }
+    },
+    "Reward":{
+        "MyWinLoseRewardSample":{
+            "class":"WinLoseReward",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "value":0.1
+                },
+                "win":2.5,
+                "lose":-2.5,
+                "draw":0.0
+            }
+        },
+        "MyInstantZerosumScoreRewardSample":{
+            "class":"R4BVRBasicReward01",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "value":0.1
+                },
+                "rElim":0.0,
+                "rElimE":-0.0,
+                "rBreakRatio":0.0,
+                "rBreak":0.0,
+                "rBreakE":-0.0,
+                "adjustBreakEnd":true,
+                "rTimeup":0.0,
+                "rDisq":-0.0,
+                "rDisqE":0.0,
+                "rHitRatio":0.0,
+				"rHit":{"Default":0.0},
+				"rHitE":{"Default":-0.0},
+                "rAdvRatio":0.0,
+                "acceptNegativeAdv":true,
+                "rCrashRatio":0.0,
+				"rCrash":{"Default":-0.0},
+				"rCrashE":{"Default":0.0},
+                "rAliveRatio":0.0,
+				"rAlive":{"Default":0.0},
+				"rAliveE":{"Default":-0.0},
+                "rOutRatio":0.0,
+                "adjustZerosum":true,
+                "rHitPerAircraft": true,
+                "rHitEPerAircraft": true,
+                "rCrashPerAircraft": true,
+                "rCrashEPerAircraft": true,
+                "rAlivePerAircraft": true,
+                "rAliveEPerAircraft": true
+            }
+        },
+        "MyTeamRewardSample":{
+            "class":"R4RewardSample01",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "value":0.1
+                },
+                "pBite":0.0,
+                "pMemT":0.0,
+                "pDetect":2.0e-4,
+                "pVel":0.0,
+                "pOmega":0.0,
+                "pLine":2.5e-6,
+                "pEnergy":0.0,
+                "pLineAsPeak":true
+            }
+        },
+        "MyAgentRewardSample":{
+            "class":"R4RewardSample02",
+            "config":{
+                "interval":{
+                    "unit":"time",
+                    "value":0.1
+                },
+                "pAvoid":0.0,
+                "pHitE_head":-0.1,
+                "pHitE_tail":-0.1,
+                "pCrash":-0.1,
+                "pHit_head":0.1,
+                "pHit_tail":0.1,
+                "pOut":-0.01,
+                "pAlive":0.0,
+                "pFuelShortage":-1e-3
+            }
+        }
+    }
+}}

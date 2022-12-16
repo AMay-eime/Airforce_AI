@@ -1,0 +1,65 @@
+{
+    "interval":{
+        "unit":"time",
+        "perceive":0.1,
+        "control":0.1,
+        "behave":0.1
+    },
+    
+    "maxTrackNum":{
+        "Friend":4,
+        "Enemy":4
+    },
+    "maxMissileNum":{
+        "Friend":8,
+        "Enemy":1
+    },
+    "horizontalNormalizer":100000.0,
+    "verticalNormalizer":20000.0,
+    "fgtrVelNormalizer":300.0,
+    "mslVelNormalizer":1200.0,
+    "use_image_observation":true,
+    "image_longitudinal_resolution":32,
+    "image_lateral_resolution":32,
+    "image_front_range":200000.0,
+    "image_back_range":0.0,
+    "image_side_range":100000.0,
+    "image_horizon":120,
+    "image_interval":1,
+    "image_rotate":false,
+    "image_relative_position":false,
+    "use_vector_observation":true,
+    "include_last_action":true,
+    "vector_past_points":[],
+
+    "flatten_action_space":false,
+    "dstAz_relative":true,
+    "turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+    "use_override_evasion":true,
+    "evasion_turnTable":[-90,-45,-20,-10,0,10,20,45,90],
+    "use_altitude_command":false,
+    "altTable":[-8000,-4000,-2000,-1000,0,1000,2000,4000,8000],
+    "refAltInterval":1000,
+    "pitchTable":[-45,-20,-10,-5,0,5,10,20,45],
+    "accelTable":[-20.0,0.0,20.0],
+    "always_maxAB":false,
+    "use_Rmax_fire":true,
+    "shotIntervalTable":[5,10,20,40,80],
+    "shotThresholdTable":[0.0,0.25,0.5,0.75,1.0],
+
+    "altMin":2000,
+    "altMax":15000,
+    "dOutLimitRatio":0.9,
+    "dOutLimitScale":50.0,
+    "maxSimulShot":4,
+    "minimumV":150.0,
+    "minimumRecoveryV":180.0,
+    "minimumRecoveryDstV":200.0,
+
+    "altitudeKeeper":{
+        "pGain":-3e-1,
+        "dGain":-1e-1,
+        "minPitch":-0.524,
+        "maxPitch":0.524
+    }
+}

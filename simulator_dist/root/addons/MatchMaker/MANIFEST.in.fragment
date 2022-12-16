@@ -1,0 +1,6 @@
+include addons/MatchMaker/MANIFEST.in.fragment
+include addons/MatchMaker/builder.py
+include addons/MatchMaker/requirements.txt
+recursive-include addons/MatchMaker *.py
+recursive-exclude addons/MatchMaker *.pyc
+recursive-include ASRCAISim1/addons/MatchMaker *

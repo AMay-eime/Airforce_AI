@@ -1,0 +1,32 @@
+{
+    "Rule-Fixed":{
+        "userModuleID":"RuleBased",
+        "args":{"type":"Fixed"},
+        "logName":"Rule-Fixed"
+    },
+    "Rule-Random":{
+        "userModuleID":"RuleBased",
+        "args":{"type":"Random"},
+        "logName":"Rule-Random"
+    },
+    "RaySample01S":{
+        "userModuleID":"RaySample01S",
+        "args":{"weightPath":"./Learner.dat"},
+        "logName":"RaySample01S"
+    },
+    "RaySample01M":{
+        "userModuleID":"RaySample01M",
+        "args":{"weightPath":"./Learner.dat"},
+        "logName":"RaySample01M"
+    },
+    "HandyRLSample01S":{
+        "userModuleID":"HandyRLSample01S",
+        "args":{"weightPath":"./Learner-latest.pth"},
+        "logName":"HandyRLSample01S"
+    },
+    "HandyRLSample01M":{
+        "userModuleID":"HandyRLSample01M",
+        "args":{"weightPath":"./Learner-latest.pth"},
+        "logName":"HandyRLSample01M"
+    }
+}

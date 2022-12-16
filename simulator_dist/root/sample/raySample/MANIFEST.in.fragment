@@ -1,0 +1,5 @@
+include sample/raySample/MANIFEST.in.fragment
+recursive-include sample/raySample *.py
+recursive-include sample/raySample *.json
+recursive-include sample/raySample *.yaml
+recursive-exclude sample/raySample *.pyc

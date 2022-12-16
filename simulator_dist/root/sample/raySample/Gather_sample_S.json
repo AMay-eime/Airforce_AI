@@ -1,0 +1,18 @@
+{
+    "head_ip_address":"auto",
+    "entrypoint_ip_address":"127.0.0.1",
+    "seed":12345,
+    "env_config":{
+        "config":[
+        "./configs/R4_contest_mission_config.json",
+        "./configs/R4_contest_gathering_config_S.json",
+        "./configs/R4_contest_asset_models.json",
+        "./configs/R4_contest_agent_ruler_reward_models.json",
+        {"Manager":{"ViewerType":"None"}}
+        ]
+    },
+    "num_workers":16,
+    "num_episodes_per_worker":100,
+    "save_dir":"./experts/Single/"
+}
+	

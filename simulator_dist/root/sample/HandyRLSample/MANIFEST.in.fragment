@@ -1,0 +1,6 @@
+include sample/HandyRLSample/MANIFEST.in.fragment
+include sample/HandyRLSample/LICENSE
+recursive-include sample/HandyRLSample *.py
+recursive-include sample/HandyRLSample *.json
+recursive-include sample/HandyRLSample *.yaml
+recursive-exclude sample/HandyRLSample *.pyc

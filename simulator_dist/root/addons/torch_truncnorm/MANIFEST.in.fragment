@@ -1,0 +1,7 @@
+include addons/torch_truncnorm/MANIFEST.in.fragment
+include addons/torch_truncnorm/builder.py
+include addons/torch_truncnorm/requirements.txt
+include addons/torch_truncnorm/LICENSE
+recursive-include addons/torch_truncnorm *.py
+recursive-exclude addons/torch_truncnorm *.pyc
+recursive-include ASRCAISim1/addons/torch_truncnorm *

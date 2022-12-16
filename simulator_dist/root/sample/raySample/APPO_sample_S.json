@@ -1,0 +1,176 @@
+{
+    "head_ip_address":"auto",
+    "entrypoint_ip_address":"127.0.0.1",
+    "seed":12345,
+    "train_steps":100000,
+    "refresh_interval":10000,
+    "checkpoint_interval":100,
+    "save_dir":"./results/Single",
+    "experiment_name":"APPO",
+    "restore":null,
+    "restore_checkpoint_number":null,
+    "trainer_common_config":{
+        "disable_env_checking":true,
+        "env_config":{
+            "config":[
+                "./configs/R4_contest_mission_config.json",
+                "./configs/R4_contest_learning_config_S.json",
+                "./configs/R4_contest_asset_models.json",
+                "./configs/R4_contest_agent_ruler_reward_models.json",
+                {
+                    "Manager":{
+                        "ViewerType":"None",
+                        "Callbacks":{},
+                        "Loggers":{}
+                    }
+                }
+            ]
+        },
+        "model":{
+            "custom_model":"R4TorchNNSampleForRay",
+            "custom_model_config":{
+                "use_lstm": true,
+                "lstm_cell_size": 256,
+                "fcnet_hiddens":[256],
+                "pos_conv": {
+                    "layers": [
+                        ["Conv2d",{"kernel_size": 7,"out_channels": 32,"padding": 3,"stride": 2}],
+                        ["BatchNorm2d",{}],
+                        ["ReLU",{}],
+                        ["ResidualBlock",{
+                            "layers":[
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 32,"padding": 1}],
+                                ["BatchNorm2d",{}],
+                                ["ReLU",{}],
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 32,"padding": 1}],
+                                ["BatchNorm2d",{}]
+                            ]}],
+                        ["ReLU",{}],
+                        ["Conv2d",{"kernel_size": 4,"out_channels": 64,"padding": 1,"stride": 2}],
+                        ["BatchNorm2d",{}],
+                        ["ReLU",{}],
+                        ["ResidualBlock",{
+                            "layers":[
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 64,"padding": 1}],
+                                ["BatchNorm2d",{}],
+                                ["ReLU",{}],
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 64,"padding": 1}],
+                                ["BatchNorm2d",{}]
+                            ]}],
+                        ["ReLU",{}],
+                        ["Conv2d",{"kernel_size": 4,"out_channels": 128,"padding": 1,"stride": 2}],
+                        ["BatchNorm2d",{}],
+                        ["ReLU",{}],
+                        ["ResidualBlock",{
+                            "layers":[
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 128,"padding": 1}],
+                                ["BatchNorm2d",{}],
+                                ["ReLU",{}],
+                                ["Conv2d",{"kernel_size": 3,"out_channels": 128,"padding": 1}],
+                                ["BatchNorm2d",{}]
+                            ]}],
+                        ["ReLU",{}],
+                        ["AdaptiveAvgPool2d",{"output_size": 1}],
+                        ["Flatten",{}]
+                    ]
+                },
+                "dense": {
+                    "layers": [
+                        ["Linear",{"out_features": 256}],
+                        ["ReLU",{}],
+                        ["ResidualBlock",{
+                            "layers":[
+                                ["Linear",{"out_features": 256}],
+                                ["BatchNorm1d",{}],
+                                ["ReLU",{}],
+                                ["Linear",{"out_features": 256}],
+                                ["BatchNorm1d",{}]
+                            ]}],
+                        ["ReLU",{}],
+                        ["ResidualBlock",{
+                            "layers":[
+                                ["Linear",{"out_features": 256}],
+                                ["BatchNorm1d",{}],
+                                ["ReLU",{}],
+                                ["Linear",{"out_features": 256}],
+                                ["BatchNorm1d",{}]
+                            ]}]
+                    ]
+                },
+                "merge": {
+                    "layers": [
+                        ["ReLU",{}]
+                    ]
+                },
+                "value":{
+                    "layers": [
+                        ["Linear",{"out_features": 64}],
+                        ["ReLU",{}],
+                        ["Linear",{"out_features": 64}],
+                        ["ReLU",{}]
+                    ]
+                },
+                "action":{
+                    "layers": [
+                        ["Linear",{"out_features": 128}],
+                        ["ReLU",{}],
+                        ["Linear",{"out_features": 128}],
+                        ["ReLU",{}]
+                    ]
+                }
+            },
+            "max_seq_len":64
+        },
+        "gamma":0.99,
+        "rollout_fragment_length":64,
+        "replay_proportion":3.0,
+        "replay_buffer_num_slots":1500,
+        "batch_mode":"truncate_episodes",
+        "train_batch_size":128,
+        "num_sgd_iter":1,
+        "num_gpus":1,
+        "lr":1e-4,
+        "num_workers":16,
+        "num_envs_per_worker":1,
+        "framework":"torch"
+    },
+    "trainers":{
+        "Learner":{
+            "trainer_type":"APPO",
+            "config_overrider":null,
+            "policies_to_train":["Learner"],
+            "node_designation":null
+        }
+    },
+    "policies":{
+        "Learner":{
+            "multi_port": false,
+            "active_limit":50,
+            "is_internal":false,
+            "populate":{
+                "first_population":1000,
+                "interval":1000,
+                "on_start":false
+            },
+            "rating_initial":1500,
+            "rating_fixed":false,
+            "initial_weight":null
+        },
+        "Initial":{
+            "multi_port": false,
+            "active_limit":null,
+            "is_internal":true,
+            "interval":null,
+            "populate":null,
+            "rating_initial":1500,
+            "rating_fixed":true,
+            "initial_weight":null
+        }
+    },
+    "match_maker":{
+        "seed":12345,
+        "match_config":{
+            "warm_up_episodes":0
+        }
+    }
+}

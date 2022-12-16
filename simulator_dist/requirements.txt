@@ -1,0 +1,12 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+tensorflow==2.10.0
+torch==1.12.1+cpu
+ray==1.13.0
+pybind11==2.10.0
+opencv-python==4.6.0.66
+PyOpenGL==3.1.6
+tqdm==4.64.1
+timeout-decorator==0.5.0
+keras-rl==0.4.2
+pfrl==0.3.0
+./ASRCAISim1
