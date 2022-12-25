@@ -1,0 +1,96 @@
+include builder.sh
+include builder.bat
+include builder_MSYS.bat
+include CMakeLists.txt
+include MANIFEST.in.fragment
+include license.txt
+include requirements.txt
+include version.txt
+recursive-include ASRCAISim1 *Core.*
+recursive-include ASRCAISim1/include/ASRCAISim1 *.h
+recursive-include ASRCAISim1/include/thirdParty *
+recursive-include ASRCAISim1/config *.json
+recursive-include ASRCAISim1/share/cmake *.cmake
+include ASRCAISim1/rangeTable.npz
+recursive-include include *.h
+recursive-include src *.cpp
+recursive-include thirdParty/include/pybind11_json *
+prune ASRCAISim1/addons
+include ASRCAISim1/addons/__init__.py
+
+include sample/OriginalModelSample/MANIFEST.in.fragment
+include sample/OriginalModelSample/setup.py
+include sample/OriginalModelSample/builder.sh
+include sample/OriginalModelSample/builder.bat
+include sample/OriginalModelSample/builder_MSYS.bat
+include sample/OriginalModelSample/CMakeLists.txt
+include sample/OriginalModelSample/MANIFEST.in.self
+recursive-include sample/OriginalModelSample/OriginalModelSample *
+recursive-include sample/OriginalModelSample/include *
+recursive-include sample/OriginalModelSample/src *
+recursive-exclude sample/OriginalModelSample/OriginalModelSample *.pyc
+
+include sample/MinimumEvaluation/MANIFEST.in.fragment
+recursive-include sample/MinimumEvaluation *.py
+recursive-include sample/MinimumEvaluation *.json
+recursive-include sample/MinimumEvaluation *.yaml
+recursive-include sample/MinimumEvaluation *.dat
+recursive-include sample/MinimumEvaluation *.pth
+recursive-exclude sample/MinimumEvaluation *.pyc
+
+include sample/HandyRLSample/MANIFEST.in.fragment
+include sample/HandyRLSample/LICENSE
+recursive-include sample/HandyRLSample *.py
+recursive-include sample/HandyRLSample *.json
+recursive-include sample/HandyRLSample *.yaml
+recursive-exclude sample/HandyRLSample *.pyc
+
+include sample/raySample/MANIFEST.in.fragment
+recursive-include sample/raySample *.py
+recursive-include sample/raySample *.json
+recursive-include sample/raySample *.yaml
+recursive-exclude sample/raySample *.pyc
+
+include addons/MatchMaker/MANIFEST.in.fragment
+include addons/MatchMaker/builder.py
+include addons/MatchMaker/requirements.txt
+recursive-include addons/MatchMaker *.py
+recursive-exclude addons/MatchMaker *.pyc
+recursive-include ASRCAISim1/addons/MatchMaker *
+
+include addons/HandyRLUtility/MANIFEST.in.fragment
+include addons/HandyRLUtility/builder.py
+recursive-include addons/HandyRLUtility *.py
+recursive-exclude addons/HandyRLUtility *.pyc
+recursive-include ASRCAISim1/addons/HandyRLUtility *
+
+include addons/AgentIsolation/MANIFEST.in.fragment
+include addons/AgentIsolation/builder.py
+include addons/AgentIsolation/builder.sh
+include addons/AgentIsolation/builder.bat
+include addons/AgentIsolation/builder_MSYS.bat
+include addons/AgentIsolation/CMakeLists.txt
+include addons/AgentIsolation/AgentIsolationConfig.cmake
+recursive-include addons/AgentIsolation/AgentIsolation *
+recursive-include addons/AgentIsolation/include *
+recursive-include addons/AgentIsolation/src *
+recursive-exclude addons/AgentIsolation/AgentIsolation *.pyc
+recursive-include ASRCAISim1/addons/AgentIsolation *
+include addons/torch_truncnorm/MANIFEST.in.fragment
+include addons/torch_truncnorm/builder.py
+include addons/torch_truncnorm/requirements.txt
+include addons/torch_truncnorm/LICENSE
+recursive-include addons/torch_truncnorm *.py
+recursive-exclude addons/torch_truncnorm *.pyc
+recursive-include ASRCAISim1/addons/torch_truncnorm *
+
+include addons/rayUtility/MANIFEST.in.fragment
+include addons/rayUtility/builder.py
+include addons/rayUtility/requirements.txt
+include addons/rayUtility/LICENSE
+recursive-include addons/rayUtility *.py
+recursive-include addons/rayUtility/extension *
+recursive-include addons/rayUtility/logger *
+recursive-exclude addons/rayUtility *.pyc
+recursive-include ASRCAISim1/addons/rayUtility *
+
