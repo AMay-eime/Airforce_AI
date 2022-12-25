@@ -1,0 +1,20 @@
+{"Factory":{"Viewer":{
+	"None":{
+		"class":"Viewer",
+		"config":{
+			"interval":{
+				"unit":"time",
+				"value":0.1
+			}
+		}
+	},
+	"God":{
+		"class":"GodView",
+		"config":{
+			"interval":{
+				"unit":"time",
+				"value":0.1
+			}
+		}
+	}
+}}}
