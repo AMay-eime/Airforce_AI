@@ -22,7 +22,7 @@
 				"verticalNormalizer":20000.0,
 				"fgtrVelNormalizer":300.0,
 				"mslVelNormalizer":1200.0,
-				"use_image_observation":true,
+				"use_image_observation":false,
 				"image_longitudinal_resolution":32,
 				"image_lateral_resolution":32,
 				"image_front_range":200000.0,
@@ -34,7 +34,7 @@
 				"image_relative_position":false,
 				"use_vector_observation":true,
 				"include_last_action":true,
-				"vector_past_points":[],
+				"vector_past_points":[10, 30, 60],
 
 				"flatten_action_space":false,
 				"dstAz_relative":true,
