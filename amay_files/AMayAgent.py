@@ -6,7 +6,7 @@ import sys
 from utils import *
 from ASRCAISim1.libCore import *
 
-class R4PyAgentSample01M(Agent):
+class AMayAgent(Agent):
 	"""編隊全体で1つのAgentを割り当てる、中央集権方式での行動判断モデルの実装例。
 	モデルの内容はほぼR4PyAgentSample01Sに準拠しているが、
 	* observationの自機と味方機を区別していた部分を「自陣営」として一纏めに
@@ -89,7 +89,7 @@ class R4PyAgentSample01M(Agent):
 		#  実数値ベクトルとして
 		if(self.use_vector_observation):
 			self.include_last_action=getValueFromJsonKRD(self.modelConfig,"include_last_action",self.randomGen,True)
-			self.vector_past_points=sorted(getValueFromJsonKRD(self.modelConfig,"vector_past_points",self.randomGen,[10, 30, 60]))
+			self.vector_past_points=sorted(getValueFromJsonKRD(self.modelConfig,"vector_past_points",self.randomGen,[10, 30, 60, 120]))
 		# action spaceの設定
 		self.flatten_action_space=getValueFromJsonKRD(self.modelConfig,"flatten_action_space",self.randomGen,False)
 		# 左右旋回に関する設定
@@ -121,6 +121,7 @@ class R4PyAgentSample01M(Agent):
 		self.always_maxAB=getValueFromJsonKRD(self.modelConfig,"always_maxAB",self.randomGen,False)
 		# 射撃に関する設定
 		self.use_Rmax_fire=getValueFromJsonKRD(self.modelConfig,"use_Rmax_fire",self.randomGen,True)
+		self.rMaxs=getValueFromJsonKRD(self.modelConfig,"rMaxs",self.randomGen,[50000, 25000, 0])
 		if(self.use_Rmax_fire):
 			self.shotIntervalTable=np.array(sorted(getValueFromJsonKRD(self.modelConfig,"shotIntervalTable",self.randomGen,
 				[5.0,10.0,20.0,40.0,80.0])),dtype=np.float64)
@@ -234,6 +235,7 @@ class R4PyAgentSample01M(Agent):
 		self.xyInv=np.array([1,1,1]) if (self.getTeam()==eastSider) else np.array([-1,-1,1])
 		self.xyQuatInv=np.array([1,1,1,1]) if (self.getTeam()==eastSider) else np.array([1,-1,-1,1])
 		self.matchProcess = 0
+		self.shot_interval = 0
 		self.teamOrigin=self.TeamOrigin(self.getTeam()==eastSider,self.dLine)
 		for pIdx,parent in enumerate(self.parents.values()):
 			if(parent.isinstance(CoordinatedFighter) or parent.isinstance(SixDoFFighter)):
@@ -262,7 +264,7 @@ class R4PyAgentSample01M(Agent):
 				current=self.makeVectorObservation()
 				#過去のobsの読み込み(リングバッファ)
 				stepCount=round(self.manager.getTickCount()/self.manager.getAgentInterval())
-				bufferSize=len(self.turnTablevector_past_data)
+				bufferSize=len(self.vector_past_data)
 				bufferIdx=bufferSize-1-(stepCount%bufferSize)
 				ofs = 0
 				vector_obs[ofs+0:ofs+0+self.vector_single_dim]=current
@@ -446,13 +448,6 @@ class R4PyAgentSample01M(Agent):
 			1.0
 		)
 	def makeVectorObservation(self):
-		#前回の行動は前回のdeployで計算済だが、dstAzのみ現在のazからの差に置き換える
-		for pIdx,parent in enumerate(self.parents.values()):
-			if(parent.isAlive()):
-				myMotion=MotionState(parent.observables["motion"])
-				deltaAz=self.last_action_obs[pIdx,0]-myMotion.az
-				self.last_action_obs[pIdx,0]=atan2(sin(deltaAz),cos(deltaAz))
-
 		#味方機(自機含む)の諸元
 		self.friend_temporal=np.zeros([self.maxTrackNum["Friend"],self.friend_dim],dtype=np.float32)
 		for fIdx in range(len(self.ourMotion)):
@@ -632,6 +627,18 @@ class R4PyAgentSample01M(Agent):
 				actionInfo.throttle = 1
 
 			#射撃
+			#敵との実質距離を計算する計算式、肝要。
+			def calcPseudoRelativeRange(self,mPos,mVel,ePos,eVel):
+				toEnem=ePos-mPos
+				directLength=np.linalg.norm(toEnem)
+				toEnem_norm=toEnem/directLength
+				mVel_norm=mVel/np.linalg.norm(mVel)
+				relVel=mVel+mVel_norm*3*self.minimumV-eVel
+				velEffect=np.dot(toEnem_norm,relVel)/self.minimumV
+				climbLange=ePos[2]-mPos[2]
+				pseudoLength=directLength-velEffect*6000-5*climbLange
+				#print(self.getFullName(),velEffect,",",pseudoLength)
+				return pseudoLength
 			shotTarget = -1
 			#射撃可否の判断、射撃コマンドの生成
 			flyingMsls=0
@@ -644,16 +651,25 @@ class R4PyAgentSample01M(Agent):
 				0 < len(self.lastTrackInfo) and
 				flyingMsls<self.maxSimulShot
 			):
-				shotTarget = 0
-			else:
-				shotTarget = -1
+				min_tgt = -1
+				min_range = 1000000 
+				for i in range(self.lastTrackInfo):
+					track = self.lastTrackInfo[i]
+					pseudo_ = calcPseudoRelativeRange(myMotion.pos, vel, track.pos, track.vel)
+					if pseudo_ < min_range:
+						min_tgt = i
+						min_range = pseudo_
+				if min_range < self.rMaxs[0]:
+					shotTarget = min_tgt
 			self.last_action_obs[pIdx,4] = shotTarget
-			if(shotTarget>=0):
+			if(shotTarget>=0 and self.shot_interval > 20):
 				actionInfo.launchFlag=True
-				actionInfo.target=Track3D()
+				actionInfo.target=Track3D(self.lastTrackInfo[shotTarget])
+				self.shot_interval = 0
 			else:
 				actionInfo.launchFlag=False
 				actionInfo.target=Track3D()
+				self.shot_interval += 1
 
 			#以下はILの時にしか使わない
 			self.observables[parent.getFullName()]["decision"]={
@@ -1230,3 +1246,9 @@ class R4PyAgentSample01M(Agent):
 			else:
 				r/=delta
 		return r
+
+#importした時に登録はしておく(Configから呼び出すために必要)
+from ASRCAISim1.common import addPythonClass
+import os
+addPythonClass('Agent', 'AMayAgent', AMayAgent)
+Factory.addDefaultModelsFromJsonFile(os.path.join(os.path.dirname(__file__),"./config/AMayAgentConfig.json"))
